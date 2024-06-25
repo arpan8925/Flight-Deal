@@ -50,4 +50,3 @@ response.raise_for_status()
 # Print the response data
 flight_offers = response.json()["data"][0]
 print(flight_offers["travelerPricings"][0]["price"])
-
