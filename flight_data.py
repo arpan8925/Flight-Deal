@@ -1,3 +1,5 @@
+
+
 class FlightData:
     def __init__(self, flight_offer):
         self.price = flight_offer['price']['total']
@@ -21,3 +23,6 @@ class FlightData:
     
     def __str__(self):
         return f"Price: {self.price} {self.currency}, Departure: {self.departure_airport} at {self.departure_time}, Arrival: {self.arrival_airport} at {self.arrival_time}, Carrier: {self.carrier_code}{self.carrier_numb}, Duration: {self.duration}"
+    
+    def flight_current_price(self):
+        return self.price
