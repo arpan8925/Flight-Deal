@@ -1,52 +1,62 @@
-class FlightSearch:
-    pass
-
-
 import requests
-import datetime
-import json
+import os
+import dotenv
 
-API_KEY = '1FTyGNf96GOhUIDxSa51OikyGGxyeXpT'
-API_SECRET = 'eOgrteOl6l0gX4G7'
+dotenv.load_dotenv()
 
-# Function to get access token
-def get_access_token():
-    url = "https://test.api.amadeus.com/v1/security/oauth2/token"
-    headers = {
-        "Content-Type": "application/x-www-form-urlencoded"
-    }
-    data = {
-        "grant_type": "client_credentials",
-        "client_id": API_KEY,
-        "client_secret": API_SECRET
-    }
-    response = requests.post(url, headers=headers, data=data)
-    response.raise_for_status()  # Ensure we catch errors
-    return response.json()['access_token']
+class FlightSearch:
+    def __init__(self):
+        super().__init__()
+     
+        self.access_token = self.get_access_token()
+        self.amadeus_flight_search_end = "https://test.api.amadeus.com/v2/shopping/flight-offers"
+        self.amadeus_header = {
+            "Authorization": f"Bearer {self.access_token}"
+        }
 
 
-ACCESS_TOKEN = get_access_token()
+    def search_flight(self, departure_date, origin, destination, adults = 1, currency="INR", travel_class="ECONOMY"):
+        self.amadeus_search_parameters = {
+            "originLocationCode": origin,
+            "destinationLocationCode": destination,
+            "departureDate": departure_date.strftime("%Y-%m-%d"),
+            "adults": adults,
+            "currencyCode": currency,
+            "travelClass": travel_class
+            }
+        
+        try:
+            response = requests.get(url=self.amadeus_flight_search_end, params=self.amadeus_search_parameters, headers=self.amadeus_header)
+            response.raise_for_status()
+            flight_offers = response.json()
+            if flight_offers:
+                return flight_offers
+            else:
+                print("No Flight Found.")
+                return None
+            
+        except requests.exceptions.RequestException as e:
+            print(f"An Error Occured {e}")
+            return None
 
-amadeus_flight_search_end = "https://test.api.amadeus.com/v2/shopping/flight-offers"
 
-amadeus_header = {
-    "Authorization": f"Bearer {ACCESS_TOKEN}"
-}
 
-date = datetime.datetime(year=2024, month=8, day=2)
+    def get_access_token(self):
 
-amadeus_search_parameters = {
-    "originLocationCode": "DAC",
-    "destinationLocationCode": "SHA",
-    "departureDate": date.strftime("%Y-%m-%d"),
-    "adults": 1,
-    "currencyCode": "INR",
-    "travelClass": "ECONOMY"
-}
-
-response = requests.get(url=amadeus_flight_search_end, params=amadeus_search_parameters, headers=amadeus_header)
-response.raise_for_status() 
-
-# Print the response data
-flight_offers = response.json()["data"][0]
-print(flight_offers["travelerPricings"][0]["price"])
+        url = "https://test.api.amadeus.com/v1/security/oauth2/token"
+        headers = {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+        data = {
+            "grant_type": "client_credentials",
+            "client_id": os.getenv("API_KEY"),
+            "client_secret": os.getenv("API_SECRET")
+        }
+        try:          
+            self.response = requests.post(url, headers=headers, data=data)
+            self.response.raise_for_status()
+            return self.response.json()['access_token']
+        
+        except requests.exceptions.RequestException as e:
+            print(f"An Error Occured {e}")
+            return None
