@@ -15,15 +15,17 @@ class FlightSearch:
         }
 
 
-    def search_flight(self, departure_date, origin, destination, adults = 1, currency="INR", travel_class="ECONOMY"):
+    def search_flight(self, departure_date, origin, destination, adults=1, currency="INR", travel_class="ECONOMY", stopage=False):
+        
         self.amadeus_search_parameters = {
             "originLocationCode": origin,
             "destinationLocationCode": destination,
             "departureDate": departure_date.strftime("%Y-%m-%d"),
             "adults": adults,
             "currencyCode": currency,
-            "travelClass": travel_class
-            }
+            "travelClass": travel_class,
+            "nonStop": str(stopage).lower()
+        }
         
         try:
             response = requests.get(url=self.amadeus_flight_search_end, params=self.amadeus_search_parameters, headers=self.amadeus_header)

@@ -4,8 +4,8 @@ import datetime
 
 flight = FlightSearch()
 
-origin = "DEL"
-destination = "DAC"
+origin = "DAC"
+destination = "AMD"
 departure_date = datetime.datetime(year=2024, month=8, day=2)
 
 # Search for flights
