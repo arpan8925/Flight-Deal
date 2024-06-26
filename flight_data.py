@@ -1,5 +1,3 @@
-
-
 class FlightData:
     def __init__(self, flight_offer):
         self.price = flight_offer['price']['total']
