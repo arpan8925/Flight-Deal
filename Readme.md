@@ -33,26 +33,26 @@
 
 1. **Clone the repository:**
 
-   ```bash
+```bash
 git clone <repository_url>
    cd arpan8925-flight-deal
 ```
 2. **Install dependencies:**
 
-   ```bash
+```bash
 pip install -r requirements.txt
 ```
 3. **Environment variables:**
 
    * Create a `.env` file in project root:
 
-     ```ini
+```ini
 AMADEUS_API_KEY=your_amadeus_api_key
      AMADEUS_API_SECRET=your_amadeus_api_secret
 ```
    * In `notification_manager.py`, set your Gmail credentials:
 
-     ```python
+```python
 self.my_email = "your_email@gmail.com"
      self.my_pass  = "your_app_password"  # Use an App Password for Gmail
 ```
@@ -61,7 +61,7 @@ self.my_email = "your_email@gmail.com"
    * Create (or open) a Google Sheet with columns: `city`, `iataCode`, `lowestPrice`.
    * Use Sheety to generate an endpoint and update it in `data_manager.py`:
 
-     ```python
+```python
 self.sheety_endpoint = "https://api.sheety.co/your_project/flightDeals/prices"
 ```
 5. **Run the application:**
@@ -138,5 +138,3 @@ sequenceDiagram
 ---
 
 > *Happy deal hunting! 🚀*
-I attempted to generate a refreshed README as a canvas document but ran into an internal error. Here’s the fully revised README content you can copy into your own README.md:
-
