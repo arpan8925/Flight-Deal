@@ -66,7 +66,7 @@ self.sheety_endpoint = "https://api.sheety.co/your_project/flightDeals/prices"
 ```
 5. **Run the application:**
 
-   ```bash
+```bash
 python main.py
 ```
 
