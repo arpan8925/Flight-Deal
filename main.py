@@ -13,6 +13,7 @@ email_notification = NotificationManager()
 origin = "DAC"
 departure_date = datetime.datetime(year=2024, month=8, day=2)
 
+
 for destination in city_codes:
     flight_offers = flight.search_flight(origin=origin, departure_date=departure_date, destination=destination)
 
@@ -22,7 +23,7 @@ for destination in city_codes:
 
             if float(live_flight_info.flight_current_price()) < float(my_price[city_codes.index(destination)]):
                 print(f"flight from {origin} to {destination}: {live_flight_info}")
-                email_notification.notify(live_flight_info)
+                # email_notification.notify(live_flight_info)
                 
             else:
                 print(f"No cheaper flight found for {destination}")
